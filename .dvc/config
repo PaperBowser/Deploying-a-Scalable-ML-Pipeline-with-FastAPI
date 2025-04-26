@@ -1,4 +1,6 @@
 [core]
     remote = localstore
+[cache]
+    dir = /home/paul/projects/dvc_storage
 ['remote "localstore"']
     url = /home/paul/projects/dvc_storage
