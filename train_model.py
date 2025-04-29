@@ -1,8 +1,7 @@
 import os
-
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
-
 from ml.data import process_data
 from ml.model import (
     compute_model_metrics,
@@ -18,9 +17,6 @@ data_path = os.path.join(project_path, "data", "census.csv")
 print(data_path)
 data = pd.read_csv(data_path)
 
-# split the provided data to have a train dataset and a test dataset
-train, test = train_test_split(data, test_size=0.2)
-
 # DO NOT MODIFY
 cat_features = [
     "workclass",
@@ -32,6 +28,13 @@ cat_features = [
     "sex",
     "native-country",
 ]
+
+# deal with '?' values in data
+data.replace('?', np.nan, inplace=True)
+data[cat_features] = data[cat_features].fillna('missing')
+
+# split the provided data to have a train dataset and a test dataset
+train, test = train_test_split(data, test_size=0.2)
 
 # use the process_data function provided to process the data.
 X_train, y_train, encoder, lb = process_data(
